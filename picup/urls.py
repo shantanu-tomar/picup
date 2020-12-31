@@ -3,9 +3,15 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
+from rest_framework.authtoken.views import ObtainAuthToken
+
+from users.views import UserCreate
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/signup/', UserCreate.as_view(), name='signup'),
+    path('api/login/', ObtainAuthToken.as_view(), name='login'),
 ]
 
 
