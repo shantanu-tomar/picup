@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from rest_framework.generics import CreateAPIView
+from rest_framework.parsers import FileUploadParser
 
-# Create your views here.
+from .serializers import ImageSerializer
+
+
+class ImageUpoadView(CreateAPIView):
+    parser_class = (FileUploadParser,)
+    serializer_class = ImageSerializer
