@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 
 from rest_framework.generics import CreateAPIView
 from rest_framework import status
@@ -19,7 +20,11 @@ class UserCreate(CreateAPIView):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = serializer.save()
+        validated_data = serializer.validated_data
+        password = validated_data.pop('password')
+        user = User(**validated_data)
+        user.set_password(password)
+        user.save()
         token = Token.objects.create(user=user)
         return Response({'token': token.key, "username": user.username}, status=status.HTTP_201_CREATED)
 
