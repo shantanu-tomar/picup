@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+import django_heroku
 
 load_dotenv()
 
@@ -167,3 +168,6 @@ AWS_DEFAULT_ACL = None
 
 if DEBUG is False:
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    SECURE_SSL_REDIRECT = True
+
+django_heroku.settings(locals())
