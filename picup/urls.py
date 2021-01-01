@@ -3,17 +3,14 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from rest_framework.authtoken.views import ObtainAuthToken
-
-from users.views import UserCreate
+from users.views import UserCreate, LoginView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/', include('images.urls')),
     path('api/signup/', UserCreate.as_view(), name='signup'),
-    path('api/login/', ObtainAuthToken.as_view(), name='login'),
-
-    path('', include('images.urls')),
+    path('api/login/', LoginView.as_view(), name='login'),
 ]
 
 
